@@ -3,24 +3,19 @@ import random
 
 
 class VeriCodeinit():
-    def __init__(self):
+    def __init__(self, width_infeed, height_infeed, width_endwise, height_endwise):
         # 新建空白文档
-        self.img_infeed = Image.new("RGB", self.Draw_Width_Height(), (255, 255, 255))
-        self.img_endwise = Image.new("RGB", self.Draw_Width_Height(60, 240), (255, 255, 255))
+        self.width_infeed = width_infeed
+        self.height_infeed = height_infeed
+        self.width_endwise = width_endwise
+        self.height_endwise = height_endwise
+        self.img_infeed = Image.new("RGB", (width_infeed, height_infeed), (255, 255, 255))
+        self.img_endwise = Image.new("RGB", (width_endwise, height_endwise), (255, 255, 255))
         # 创建Font对象
         self.font = ImageFont.truetype('arial.ttf', 36)
         # 创建Draw对象
         self.draw_infeed = ImageDraw.Draw(self.img_infeed)
         self.draw_endwise = ImageDraw.Draw(self.img_endwise)
-
-    def Draw_Width_Height(self, Width=240, Height=60):
-        """
-        生成画板
-        :param width:画板宽度
-        :param height: 画板高度
-        :return:W,H
-        """
-        return Width, Height
 
     def randChar(self):
         """
@@ -50,18 +45,16 @@ class VeriCodeinit():
                 random.randint(100, 255),
                 random.randint(100, 255))
 
-    # 横向背景填充像素
-    def infeed_backdrop(self):
-        width_infeed, height_infeed = self.Draw_Width_Height()
-        for x in range(width_infeed):
-            for y in range(height_infeed):
+    def backdrop(self):
+        """
+        横向和纵向背景填充像素
+        :return:
+        """
+        for x in range(self.width_infeed):# 横向背景填充像素
+            for y in range(self.height_infeed):
                 self.draw_infeed.point((x, y), fill=self.randColor_backdrop())
-
-    # 纵向背景填充像素
-    def endwise_backdrop(self):
-        width_endwise, height_endwise = self.Draw_Width_Height(60, 240)
-        for x in range(width_endwise):
-            for y in range(height_endwise):
+        for x in range(self.width_endwise):# 纵向背景填充像素
+            for y in range(self.height_endwise):
                 self.draw_endwise.point((x, y), fill=self.randColor_backdrop())
 
 
